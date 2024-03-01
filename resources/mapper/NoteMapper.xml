@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.note.mapper.NoteMapper">
+    <resultMap id="noteList" type="com.info.view.note.model.Note">
+			<result column="noteName" property="noteName" jdbcType="VARCHAR" />
+			<result column="noteContext" property="noteContext" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="noteList">
+		SELECT t.* FROM note t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.note.model.Note">
+		SELECT t.*
+			FROM note t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="noteList">
+		SELECT t.*
+			FROM note t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="noteList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from note t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleNote" parameterType="String">
+		Delete FROM note where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addNote" parameterType="com.info.view.note.model.Note">
+		INSERT INTO note 
+			(
+		    	noteName,
+		    	noteContext,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{noteName},
+		    	#{noteContext},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateNote" parameterType="com.info.view.note.model.Note">
+		UPDATE note SET
+		    	noteName=#{noteName},
+		    	noteContext=#{noteContext},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

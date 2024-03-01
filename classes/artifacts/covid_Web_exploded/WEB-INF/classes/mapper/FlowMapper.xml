@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.flow.mapper.FlowMapper">
+    <resultMap id="flowList" type="com.info.view.flow.model.Flow">
+			<result column="name" property="name" jdbcType="VARCHAR" />
+			<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="hz" property="hz" jdbcType="VARCHAR" />
+			<result column="hzMobile" property="hzMobile" jdbcType="VARCHAR" />
+			<result column="flowDate" property="flowDate" jdbcType="VARCHAR" />
+			<result column="flowType" property="flowType" jdbcType="VARCHAR" />
+			<result column="unitNo" property="unitNo" jdbcType="VARCHAR" />
+			<result column="flowContext" property="flowContext" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="flowList">
+		SELECT t.* FROM flow t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.flow.model.Flow">
+		SELECT t.*
+			FROM flow t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="flowList">
+		SELECT t.*
+			FROM flow t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="flowList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from flow t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleFlow" parameterType="String">
+		Delete FROM flow where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addFlow" parameterType="com.info.view.flow.model.Flow">
+		INSERT INTO flow 
+			(
+		    	name,
+		    	mobile,
+		    	address,
+		    	hz,
+		    	hzMobile,
+		    	flowDate,
+		    	flowType,
+		    	unitNo,
+		    	flowContext,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{name},
+		    	#{mobile},
+		    	#{address},
+		    	#{hz},
+		    	#{hzMobile},
+		    	#{flowDate},
+		    	#{flowType},
+		    	#{unitNo},
+		    	#{flowContext},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateFlow" parameterType="com.info.view.flow.model.Flow">
+		UPDATE flow SET
+		    	name=#{name},
+		    	mobile=#{mobile},
+		    	address=#{address},
+		    	hz=#{hz},
+		    	hzMobile=#{hzMobile},
+		    	flowDate=#{flowDate},
+		    	flowType=#{flowType},
+		    	unitNo=#{unitNo},
+		    	flowContext=#{flowContext},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

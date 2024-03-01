@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.disinfect.mapper.DisinfectMapper">
+    <resultMap id="disinfectList" type="com.info.view.disinfect.model.Disinfect">
+			<result column="disinfectName" property="disinfectName" jdbcType="VARCHAR" />
+			<result column="disinfectContext" property="disinfectContext" jdbcType="VARCHAR" />
+			<result column="userId" property="userId" jdbcType="VARCHAR" />
+			<result column="userName" property="userName" jdbcType="VARCHAR" />
+			<result column="authorId" property="authorId" jdbcType="VARCHAR" />
+			<result column="authorName" property="authorName" jdbcType="VARCHAR" />
+			<result column="authorContext" property="authorContext" jdbcType="VARCHAR" />
+			<result column="disinfectType" property="disinfectType" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="disinfectList">
+		SELECT t.* FROM disinfect t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.disinfect.model.Disinfect">
+		SELECT t.*
+			FROM disinfect t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="disinfectList">
+		SELECT t.*
+			FROM disinfect t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="disinfectList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from disinfect t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleDisinfect" parameterType="String">
+		Delete FROM disinfect where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addDisinfect" parameterType="com.info.view.disinfect.model.Disinfect">
+		INSERT INTO disinfect 
+			(
+		    	disinfectName,
+		    	disinfectContext,
+		    	userId,
+		    	userName,
+		    	authorId,
+		    	authorName,
+		    	authorContext,
+		    	disinfectType,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{disinfectName},
+		    	#{disinfectContext},
+		    	#{userId},
+		    	#{userName},
+		    	#{authorId},
+		    	#{authorName},
+		    	#{authorContext},
+		    	#{disinfectType},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateDisinfect" parameterType="com.info.view.disinfect.model.Disinfect">
+		UPDATE disinfect SET
+		    	disinfectName=#{disinfectName},
+		    	disinfectContext=#{disinfectContext},
+		    	userId=#{userId},
+		    	userName=#{userName},
+		    	authorId=#{authorId},
+		    	authorName=#{authorName},
+		    	authorContext=#{authorContext},
+		    	disinfectType=#{disinfectType},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

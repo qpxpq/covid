@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.bespoke.mapper.BespokeMapper">
+    <resultMap id="bespokeList" type="com.info.view.bespoke.model.Bespoke">
+			<result column="vaccinumId" property="vaccinumId" jdbcType="VARCHAR" />
+			<result column="vaccinumName" property="vaccinumName" jdbcType="VARCHAR" />
+			<result column="vaccinumType" property="vaccinumType" jdbcType="VARCHAR" />
+			<result column="userId" property="userId" jdbcType="VARCHAR" />
+			<result column="userName" property="userName" jdbcType="VARCHAR" />
+			<result column="authorId" property="authorId" jdbcType="VARCHAR" />
+			<result column="authorName" property="authorName" jdbcType="VARCHAR" />
+			<result column="authorContext" property="authorContext" jdbcType="VARCHAR" />
+			<result column="accusationType" property="accusationType" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="bespokeList">
+		SELECT t.* FROM bespoke t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.bespoke.model.Bespoke">
+		SELECT t.*
+			FROM bespoke t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="bespokeList">
+		SELECT t.*
+			FROM bespoke t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="bespokeList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from bespoke t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleBespoke" parameterType="String">
+		Delete FROM bespoke where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addBespoke" parameterType="com.info.view.bespoke.model.Bespoke">
+		INSERT INTO bespoke 
+			(
+		    	vaccinumId,
+		    	vaccinumName,
+		    	vaccinumType,
+		    	userId,
+		    	userName,
+		    	authorId,
+		    	authorName,
+		    	authorContext,
+		    	accusationType,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{vaccinumId},
+		    	#{vaccinumName},
+		    	#{vaccinumType},
+		    	#{userId},
+		    	#{userName},
+		    	#{authorId},
+		    	#{authorName},
+		    	#{authorContext},
+		    	#{accusationType},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateBespoke" parameterType="com.info.view.bespoke.model.Bespoke">
+		UPDATE bespoke SET
+		    	vaccinumId=#{vaccinumId},
+		    	vaccinumName=#{vaccinumName},
+		    	vaccinumType=#{vaccinumType},
+		    	userId=#{userId},
+		    	userName=#{userName},
+		    	authorId=#{authorId},
+		    	authorName=#{authorName},
+		    	authorContext=#{authorContext},
+		    	accusationType=#{accusationType},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

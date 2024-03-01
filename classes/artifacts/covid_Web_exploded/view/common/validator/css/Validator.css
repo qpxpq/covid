@@ -1,0 +1,68 @@
+/*验证错误的元素样式*/
+.v-form-invalid{
+	background:#fff url(invalid_line.gif) repeat-x bottom;
+	border: 1px solid #dd7870;
+	padding:2px 2px 2px 2px;
+}
+
+/*错误提示样式*/
+.v-form-invalid-tip{
+	background: #FFF2E9  url(exclamation.gif) no-repeat ;
+	border: 1px solid #FF6600;
+	margin-left:15px;
+	padding:2px 2px 2px 20px;
+	position:absolute;
+	font:normal 12px Verdana;
+	display:none;
+	z-index: 999;
+	text-align: left;
+}
+
+/*信息提示样式*/
+.v-form-info-tip {
+	background:transparent url(tips_icon.gif) no-repeat scroll center bottom;
+	border-top:1px solid #00B800;
+	color:#666666;
+	font-family:Tahoma;
+	font-size:12px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	line-height:normal;
+	margin:0pt;
+	padding:5px 5px 15px;
+	position:absolute;
+	width:290px;
+	_width:300px;
+	display:none;
+	z-index: 999;
+	text-align: left;
+}
+
+.v-form-invalid-img-p{
+	background:url(exclamation.gif) no-repeat ;
+	position:absolute;
+	z-index: 999;
+	width: 18px;
+	height: 15px;
+	border: 0px;
+}
+
+.v-form-invalid-img{
+	background:url(exclamation.gif) no-repeat ;
+	z-index: 999;
+	width: 18px;
+	height: 15px;
+	border: 0px;
+}
+
+.v-form-invalid-xh{
+	position:absolute;
+	z-index: 999;
+}
+
+.v-form-readonly{
+	border:0px #fff solid;
+}

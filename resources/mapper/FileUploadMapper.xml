@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.file.mapper.FileUploadMapper">
+    <resultMap id="studentList" type="com.info.view.file.model.FileUpload">
+       <result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+       <result column="fileOldName" property="fileOldName" jdbcType="VARCHAR" />
+       <result column="fileNewName" property="fileNewName" jdbcType="VARCHAR" />
+       <result column="filePath" property="filePath" jdbcType="VARCHAR" />
+       <result column="fileSuffix" property="fileSuffix" jdbcType="VARCHAR" />
+       <result column="id" property="id" jdbcType="VARCHAR" />
+   </resultMap>
+	
+	<select id="executeSQL" parameterType="String" resultMap="studentList">
+		 ${sql}
+	</select>
+	
+	<insert id="addFileUpload" parameterType="com.info.view.person.model.Person">
+		INSERT INTO t_file (resourceId,fileOldName, fileNewName, filePath ,fileSuffix,id)
+		VALUES
+			(#{resourceId},#{fileOldName},#{fileNewName},#{filePath},#{fileSuffix},#{id})
+	</insert>
+</mapper>

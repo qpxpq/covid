@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.stack.mapper.StackMapper">
+    <resultMap id="stackList" type="com.info.view.stack.model.Stack">
+			<result column="name" property="name" jdbcType="VARCHAR" />
+			<result column="tw" property="tw" jdbcType="VARCHAR" />
+			<result column="fileName" property="fileName" jdbcType="VARCHAR" />
+			<result column="fileURL" property="fileURL" jdbcType="VARCHAR" />
+			<result column="stackType" property="stackType" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="stackList">
+		SELECT t.* FROM stack t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.stack.model.Stack">
+		SELECT t.*
+			FROM stack t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="stackList">
+		SELECT t.*
+			FROM stack t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="stackList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from stack t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleStack" parameterType="String">
+		Delete FROM stack where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addStack" parameterType="com.info.view.stack.model.Stack">
+		INSERT INTO stack 
+			(
+		    	name,
+		    	tw,
+		    	fileName,
+		    	fileURL,
+		    	stackType,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{name},
+		    	#{tw},
+		    	#{fileName},
+		    	#{fileURL},
+		    	#{stackType},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateStack" parameterType="com.info.view.stack.model.Stack">
+		UPDATE stack SET
+		    	name=#{name},
+		    	tw=#{tw},
+		    	fileName=#{fileName},
+		    	fileURL=#{fileURL},
+		    	stackType=#{stackType},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

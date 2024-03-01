@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.leadership.mapper.LeadershipMapper">
+    <resultMap id="leadershipList" type="com.info.view.leadership.model.Leadership">
+			<result column="healthStatus" property="healthStatus" jdbcType="VARCHAR" />
+			<result column="tw" property="tw" jdbcType="VARCHAR" />
+			<result column="healthContext" property="healthContext" jdbcType="VARCHAR" />
+			<result column="fxdq" property="fxdq" jdbcType="VARCHAR" />
+			<result column="jtfs" property="jtfs" jdbcType="VARCHAR" />
+			<result column="info" property="info" jdbcType="VARCHAR" />
+			<result column="userId" property="userId" jdbcType="VARCHAR" />
+			<result column="userName" property="userName" jdbcType="VARCHAR" />
+			<result column="authorId" property="authorId" jdbcType="VARCHAR" />
+			<result column="authorName" property="authorName" jdbcType="VARCHAR" />
+			<result column="authorContext" property="authorContext" jdbcType="VARCHAR" />
+			<result column="healthType" property="healthType" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="leadershipList">
+		SELECT t.* FROM leadership t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.leadership.model.Leadership">
+		SELECT t.*
+			FROM leadership t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="leadershipList">
+		SELECT t.*
+			FROM leadership t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="leadershipList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from leadership t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleLeadership" parameterType="String">
+		Delete FROM leadership where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addLeadership" parameterType="com.info.view.leadership.model.Leadership">
+		INSERT INTO leadership 
+			(
+		    	healthStatus,
+		    	tw,
+		    	healthContext,
+		    	fxdq,
+		    	jtfs,
+		    	info,
+		    	userId,
+		    	userName,
+		    	authorId,
+		    	authorName,
+		    	authorContext,
+		    	healthType,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{healthStatus},
+		    	#{tw},
+		    	#{healthContext},
+		    	#{fxdq},
+		    	#{jtfs},
+		    	#{info},
+		    	#{userId},
+		    	#{userName},
+		    	#{authorId},
+		    	#{authorName},
+		    	#{authorContext},
+		    	#{healthType},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateLeadership" parameterType="com.info.view.leadership.model.Leadership">
+		UPDATE leadership SET
+		    	healthStatus=#{healthStatus},
+		    	tw=#{tw},
+		    	healthContext=#{healthContext},
+		    	fxdq=#{fxdq},
+		    	jtfs=#{jtfs},
+		    	info=#{info},
+		    	userId=#{userId},
+		    	userName=#{userName},
+		    	authorId=#{authorId},
+		    	authorName=#{authorName},
+		    	authorContext=#{authorContext},
+		    	healthType=#{healthType},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

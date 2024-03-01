@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.health.mapper.HealthMapper">
+    <resultMap id="healthList" type="com.info.view.health.model.Health">
+			<result column="healthType" property="healthType" jdbcType="VARCHAR" />
+			<result column="tw" property="tw" jdbcType="VARCHAR" />
+			<result column="healthContext" property="healthContext" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="healthList">
+		SELECT t.* FROM health t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.health.model.Health">
+		SELECT t.*
+			FROM health t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="healthList">
+		SELECT t.*
+			FROM health t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="healthList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from health t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleHealth" parameterType="String">
+		Delete FROM health where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addHealth" parameterType="com.info.view.health.model.Health">
+		INSERT INTO health 
+			(
+		    	healthType,
+		    	tw,
+		    	healthContext,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{healthType},
+		    	#{tw},
+		    	#{healthContext},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateHealth" parameterType="com.info.view.health.model.Health">
+		UPDATE health SET
+		    	healthType=#{healthType},
+		    	tw=#{tw},
+		    	healthContext=#{healthContext},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

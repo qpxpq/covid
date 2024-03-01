@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.register.mapper.RegisterMapper">
+    <resultMap id="registerList" type="com.info.view.register.model.Register">
+			<result column="name" property="name" jdbcType="VARCHAR" />
+			<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+			<result column="address" property="address" jdbcType="VARCHAR" />
+			<result column="tw" property="tw" jdbcType="VARCHAR" />
+			<result column="lc" property="lc" jdbcType="VARCHAR" />
+			<result column="otherInfo" property="otherInfo" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="registerList">
+		SELECT t.* FROM register t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.register.model.Register">
+		SELECT t.*
+			FROM register t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="registerList">
+		SELECT t.*
+			FROM register t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="registerList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from register t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleRegister" parameterType="String">
+		Delete FROM register where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addRegister" parameterType="com.info.view.register.model.Register">
+		INSERT INTO register 
+			(
+		    	name,
+		    	mobile,
+		    	address,
+		    	tw,
+		    	lc,
+		    	otherInfo,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{name},
+		    	#{mobile},
+		    	#{address},
+		    	#{tw},
+		    	#{lc},
+		    	#{otherInfo},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateRegister" parameterType="com.info.view.register.model.Register">
+		UPDATE register SET
+		    	name=#{name},
+		    	mobile=#{mobile},
+		    	address=#{address},
+		    	tw=#{tw},
+		    	lc=#{lc},
+		    	otherInfo=#{otherInfo},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

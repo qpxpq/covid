@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.visit.mapper.VisitMapper">
+    <resultMap id="visitList" type="com.info.view.visit.model.Visit">
+			<result column="visitName" property="visitName" jdbcType="VARCHAR" />
+			<result column="visitSy" property="visitSy" jdbcType="VARCHAR" />
+			<result column="visitRs" property="visitRs" jdbcType="VARCHAR" />
+			<result column="visitDate" property="visitDate" jdbcType="TIMESTAMP" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="visitList">
+		SELECT t.* FROM visit t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.visit.model.Visit">
+		SELECT t.*
+			FROM visit t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="visitList">
+		SELECT t.*
+			FROM visit t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="visitList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from visit t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleVisit" parameterType="String">
+		Delete FROM visit where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addVisit" parameterType="com.info.view.visit.model.Visit">
+		INSERT INTO visit 
+			(
+		    	visitName,
+		    	visitSy,
+		    	visitRs,
+		    	visitDate,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{visitName},
+		    	#{visitSy},
+		    	#{visitRs},
+		    	#{visitDate},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateVisit" parameterType="com.info.view.visit.model.Visit">
+		UPDATE visit SET
+		    	visitName=#{visitName},
+		    	visitSy=#{visitSy},
+		    	visitRs=#{visitRs},
+		    	visitDate=#{visitDate},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

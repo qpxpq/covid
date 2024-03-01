@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Validator目前可实现的验证类型有：
+1.Require  		：  必填,当status=='enable'时会自动在节点后面加上红色*号
+2.Chinese  		：  中文
+3.English  		：  英文
+4.Number   		：  正整数
+5.Integer  		：  整数
+6.Double   		：  浮点数   可选配置 precise(精确数，如：##.## 只允许类似为35.09、5.09这样的数)
+7.Email    		：  邮件
+8.Url      		：  使用HTTP协议的网址
+9.Phone   		：  电话号码
+10.Mobile  		：  手机号码
+11.Currency		：  货币
+13.Zip     		：  邮政编码
+14.IdCard  		：  身份证号码
+15.QQ     		：  QQ号码
+16.Time    		：  时间    可选配置 format(时间格式，支持 支持"HH时mm分ss秒"，默认为"HH:mm:ss"),theValue(指定的时间,填new Date()表示当前时间), opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+17.Date    		：  日期    可选配置 format(日期格式，支持 "yyyy/MM/dd"、"yyyy.MM.dd"、"yyyy年MM月dd日"，默认为"yyyy-MM-dd"),theValue(指定的日期,填new Date()表示当前时间), opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+18.DateTime    	：  日期时间    可选配置 format(日期时间格式，支持 "yyyy/MM/dd HH:mm:ss"、"yyyy.MM.dd HH:mm:ss"、"yyyy年MM月dd日 HH时mm分ss秒"，默认为"yyyy-MM-dd HH:mm:ss"),theValue(指定的日期时间,填new Date()表示当前时间), opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+19.Safe         ：  符合安全规则的字符串
+20.Repeat       ：  某项的重复值  必要配置 to(另一个输入值的name)
+21.Compare      ：  两数的关系比较  必要配置 theValue(指定的数字) 可选配置 opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+22.Range        ：  判断输入值是否在(n, m)区间 必要配置 min(n的值) max(m的值)
+23.LimitB        ：  输入字符长度限制  可选配置 min(n的值，默认0) max(m的值，默认Number.MAX_VALUE)
+24.LimitBB   	：  双字节字符长度限制 可选配置 min(n的值，默认0) max(m的值，默认Number.MAX_VALUE)
+25.Group        ：  对于具有相同名称的单选按钮的选中判断。限制具有相同名称的多选按钮的选中数目 可选配置 min(n的值，默认0) max(m的值，默认Number.MAX_VALUE)
+26.Filter       ：  文件上传格式过滤  必要配置 accept(文件后缀名,如：jpg, gif, png)
+27.Custom       ：  自定义的正则表达式验证 必要配置 regexp(自定义的正则表达式)
+
+支持组合验证，以","号分隔，例如配置validateType=Require,Chinese,LimitBB 表示需要必填、中文、且有字节长度限制
+支持前缀验证，如配置 prefix=true  表示对于具有相同前缀的名字节点的统一配置，此时name值将作为前缀名
+支持预注册，即可以先注册还没有出现的html节点
+
+配置方式：
+var obj = {
+	name:'Card',					//必要配置，需要被配置的节点的name,不是id
+	text:'身份证',					//字段对应的label，一般用于提示作用
+	validateType:'IdCard,Require',		//必要配置，验证的类型，可配置多个
+	enableInfoTip:true,					//可选配置，默认为false，当节点获得焦点时显示提示信息
+	infoTip:'请输入正确的18位身份证号码！', //可选配置，默认为'没有提示信息,请检查。如果不需要提示信息,请配置为不启用！',必须enableInfoTip=true
+	enableErrorTip:true,		//可选配置，默认为true 表示启用错误提示
+	errorTip:'身份证号码不正确', 	//可选配置，不选有个默认值，用于错误提示，必须enableErrorTip=true
+	prefix:false,               //是否采用前缀验证，表示对于具有相同前缀的名字节点的统一配置，此时name值将作为前缀名，默认为false
+	status:'enable'              //状态 'disabled'(不可编辑)/'enable'(可编辑，默认)/'hidden'(隐藏)
+}
+Validator.add(obj,theForm);//注册到验证类中 theForm可不传，默认为 document.forms[0]
+Validator.vd(document.getElementById(obj.name));//验证指定的节点
+Validator.remove(document.getElementById(obj.name));//销毁指定节点的验证
+
+Validator.add(objArray,theForm);//一次性全部注册
+Validator.vd();//全部验证,有错误会弹出alert
+Validator.remove();//销毁全部验证
+
+运行环境(客户端)：
+在Windows XP下用IE6.0+SP2和Mozilla Firefox 2.0.0.14测试通过
+
+
+修改日志：
+1、2008-08-22 增加 Validator.valid(dom,validateType);//手动指定验证，用于其他触发事件中
+2、2008-08-25 增加 如果指定了 LimitB 类型验证，则自动验证 LimitBB 的验证 max(LimitBB) = max(LimitB)
+3、2008-08-26 增加 Time、DateTime 类型验证
+4、2008-10-16 增加 对Time、Date和DateTime类型指定值的比较
+
+ -->
+ 
+<form>
+	<field name="username" text="用户名" validateType="Require,LimitB" />
+	<field name="password" text="密码" validateType="Require,LimitB" />
+</form>

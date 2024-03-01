@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.message.mapper.MessageMapper">
+    <resultMap id="messageList" type="com.info.view.message.model.Message">
+			<result column="messageName" property="messageName" jdbcType="VARCHAR" />
+			<result column="messageContext" property="messageContext" jdbcType="VARCHAR" />
+			<result column="userId" property="userId" jdbcType="VARCHAR" />
+			<result column="userName" property="userName" jdbcType="VARCHAR" />
+			<result column="authorId" property="authorId" jdbcType="VARCHAR" />
+			<result column="authorName" property="authorName" jdbcType="VARCHAR" />
+			<result column="authorContext" property="authorContext" jdbcType="VARCHAR" />
+			<result column="messageType" property="messageType" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="messageList">
+		SELECT t.* FROM message t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.message.model.Message">
+		SELECT t.*
+			FROM message t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="messageList">
+		SELECT t.*
+			FROM message t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="messageList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from message t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleMessage" parameterType="String">
+		Delete FROM message where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addMessage" parameterType="com.info.view.message.model.Message">
+		INSERT INTO message 
+			(
+		    	messageName,
+		    	messageContext,
+		    	userId,
+		    	userName,
+		    	authorId,
+		    	authorName,
+		    	authorContext,
+		    	messageType,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{messageName},
+		    	#{messageContext},
+		    	#{userId},
+		    	#{userName},
+		    	#{authorId},
+		    	#{authorName},
+		    	#{authorContext},
+		    	#{messageType},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateMessage" parameterType="com.info.view.message.model.Message">
+		UPDATE message SET
+		    	messageName=#{messageName},
+		    	messageContext=#{messageContext},
+		    	userId=#{userId},
+		    	userName=#{userName},
+		    	authorId=#{authorId},
+		    	authorName=#{authorName},
+		    	authorContext=#{authorContext},
+		    	messageType=#{messageType},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

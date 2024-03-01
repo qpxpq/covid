@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Validator目前可实现的验证类型有：
+1.Require  		：  必填,当status=='enable'时会自动在节点后面加上红色*号
+2.Chinese  		：  中文
+3.English  		：  英文
+4.Number   		：  正整数
+5.Integer  		：  整数
+6.Double   		：  浮点数   可选配置 precise(精确数，如：##.## 只允许类似为35.09、5.09这样的数)
+7.Email    		：  邮件
+8.Url      		：  使用HTTP协议的网址
+9.Phone   		：  电话号码
+10.Mobile  		：  手机号码
+11.Currency		：  货币
+13.Zip     		：  邮政编码
+14.IdCard  		：  身份证号码
+15.QQ     		：  QQ号码
+16.Time    		：  时间    可选配置 format(时间格式，支持 支持"HH时mm分ss秒"，默认为"HH:mm:ss"),theValue(指定的时间,填new Date()表示当前时间), opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+17.Date    		：  日期    可选配置 format(日期格式，支持 "yyyy/MM/dd"、"yyyy.MM.dd"、"yyyy年MM月dd日"，默认为"yyyy-MM-dd"),theValue(指定的日期,填new Date()表示当前时间), opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+18.DateTime    	：  日期时间    可选配置 format(日期时间格式，支持 "yyyy/MM/dd HH:mm:ss"、"yyyy.MM.dd HH:mm:ss"、"yyyy年MM月dd日 HH时mm分ss秒"，默认为"yyyy-MM-dd HH:mm:ss"),theValue(指定的日期时间,填new Date()表示当前时间), opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+19.Safe         ：  符合安全规则的字符串
+20.Repeat       ：  某项的重复值  必要配置 to(另一个输入值的name)
+21.Compare      ：  两数的关系比较  必要配置 theValue(指定的数字) 可选配置 opt(比较动作)：eq(默认等于),neq(不等于),gt(大于),gteq(大于等于),lt(小于),lteq(小于等于)
+22.Range        ：  判断输入值是否在(n, m)区间 必要配置 min(n的值) max(m的值)
+23.LimitB        ：  输入字符长度限制  可选配置 min(n的值，默认0) max(m的值，默认Number.MAX_VALUE)
+25.Group        ：  对于具有相同名称的单选按钮的选中判断。限制具有相同名称的多选按钮的选中数目 可选配置 min(n的值，默认0) max(m的值，默认Number.MAX_VALUE)
+26.Filter       ：  文件上传格式过滤  必要配置 accept(文件后缀名,如：jpg, gif, png)
+27.Custom       ：  自定义的正则表达式验证 必要配置 regexp(自定义的正则表达式)
+ -->
+<form>
+				<field name="noteName" text="帖子标题" validateType="LimitB,Require" max="2000"/>
+			<field name="appriseNote" text="回复内容" validateType="LimitB,Require" max="2000"/>
+</form>

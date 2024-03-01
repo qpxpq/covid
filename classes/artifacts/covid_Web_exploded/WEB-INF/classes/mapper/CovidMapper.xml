@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.covid.mapper.CovidMapper">
+    <resultMap id="covidList" type="com.info.view.covid.model.Covid">
+			<result column="covidName" property="covidName" jdbcType="VARCHAR" />
+			<result column="covidContext" property="covidContext" jdbcType="VARCHAR" />
+			<result column="covidSc" property="covidSc" jdbcType="VARCHAR" />
+			<result column="covidAddress" property="covidAddress" jdbcType="VARCHAR" />
+			<result column="covidType" property="covidType" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="covidList">
+		SELECT t.* FROM covid t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.covid.model.Covid">
+		SELECT t.*
+			FROM covid t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="covidList">
+		SELECT t.*
+			FROM covid t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="covidList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from covid t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleCovid" parameterType="String">
+		Delete FROM covid where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addCovid" parameterType="com.info.view.covid.model.Covid">
+		INSERT INTO covid 
+			(
+		    	covidName,
+		    	covidContext,
+		    	covidSc,
+		    	covidAddress,
+		    	covidType,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{covidName},
+		    	#{covidContext},
+		    	#{covidSc},
+		    	#{covidAddress},
+		    	#{covidType},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateCovid" parameterType="com.info.view.covid.model.Covid">
+		UPDATE covid SET
+		    	covidName=#{covidName},
+		    	covidContext=#{covidContext},
+		    	covidSc=#{covidSc},
+		    	covidAddress=#{covidAddress},
+		    	covidType=#{covidType},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>

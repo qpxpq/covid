@@ -1,0 +1,11 @@
+/applicationContext.xml
+/com/
+/fields/
+/jdbc.properties
+/log4j.properties
+/mapper/
+/mybatis-config.xml
+/rebel.xml
+/spring-mybatis.xml
+/springmvc.xml
+/tag/

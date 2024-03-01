@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.info.view.appriseNote.mapper.AppriseNoteMapper">
+    <resultMap id="appriseNoteList" type="com.info.view.appriseNote.model.AppriseNote">
+			<result column="noteId" property="noteId" jdbcType="VARCHAR" />
+			<result column="noteName" property="noteName" jdbcType="VARCHAR" />
+			<result column="appriseNote" property="appriseNote" jdbcType="VARCHAR" />
+			<result column="resourceId" property="resourceId" jdbcType="VARCHAR" />
+			<result column="creatorId" property="creatorId" jdbcType="VARCHAR" />
+			<result column="creatorName" property="creatorName" jdbcType="VARCHAR" />
+			<result column="updaterId" property="updaterId" jdbcType="VARCHAR" />
+			<result column="updaterName" property="updaterName" jdbcType="VARCHAR" />
+			<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+   </resultMap>
+
+	<select id="findAll" resultMap="appriseNoteList">
+		SELECT t.* FROM appriseNote t
+	</select>
+	
+	<select id="findById" parameterType="String" resultType="com.info.view.appriseNote.model.AppriseNote">
+		SELECT t.*
+			FROM appriseNote t
+				WHERE  1=1  AND 
+				    	resourceId = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByCondition" parameterType="String" resultMap="appriseNoteList">
+		SELECT t.*
+			FROM appriseNote t
+				WHERE  1=1   ${hql}
+	</select>
+	
+	<select id="executeSQL" parameterType="String" resultMap="appriseNoteList">
+		 ${sql}
+	</select>
+	
+	
+	
+	<select id="selectCount" resultType="java.lang.Integer">
+    	select count(*) from appriseNote t where 1=1 ${hql}
+  	</select>
+	
+	
+	<delete id="deteleAppriseNote" parameterType="String">
+		Delete FROM appriseNote where 
+		    	resourceId = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="addAppriseNote" parameterType="com.info.view.appriseNote.model.AppriseNote">
+		INSERT INTO appriseNote 
+			(
+		    	noteId,
+		    	noteName,
+		    	appriseNote,
+		    	creatorId,
+		    	creatorName,
+		    	updaterId,
+		    	updaterName,
+		    	updateTime,
+		    	createTime,
+		    	resourceId
+			)
+		VALUES
+			(
+		    	#{noteId},
+		    	#{noteName},
+		    	#{appriseNote},
+		    	#{creatorId},
+		    	#{creatorName},
+		    	#{updaterId},
+		    	#{updaterName},
+		    	#{updateTime},
+		    	#{createTime},
+		    	#{resourceId}
+			)
+	</insert>
+	
+	<update id="updateAppriseNote" parameterType="com.info.view.appriseNote.model.AppriseNote">
+		UPDATE appriseNote SET
+		    	noteId=#{noteId},
+		    	noteName=#{noteName},
+		    	appriseNote=#{appriseNote},
+		    	creatorId=#{creatorId},
+		    	creatorName=#{creatorName},
+		    	updaterId=#{updaterId},
+		    	updaterName=#{updaterName},
+		    	updateTime=#{updateTime},
+		    	createTime=#{createTime},
+		    	resourceId=#{resourceId}
+		WHERE 
+		    	resourceId=#{resourceId}
+	</update>
+</mapper>
